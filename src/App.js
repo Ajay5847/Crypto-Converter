@@ -17,24 +17,24 @@ const App = () => {
   );
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   useEffect(() => {
     //console.log(inputValue, defaultFirstValue, defaultSecondValue);
-    if (cryptoList.length > 0) {
+    if (cryptoList.length == 0){
+      return;
+    }
+    else {
       const firstObj = cryptoList.find((item) => {
         return item.value === defaultFirstValue;
       });
       const secondObj = cryptoList.find((item) => {
         return item.value === defaultSecondValue;
       });
-      console.log(firstObj, secondObj);
       const updatedValue = ((secondObj.rates)*inputValue/(firstObj.rates)).toFixed(4);
-      console.log(updatedValue);
-
       setdefaultConversion(`${inputValue} ${defaultFirstValue} = ${updatedValue} ${defaultSecondValue}`)
     }
-  }, [inputValue, defaultFirstValue, defaultSecondValue]);
+  }, [inputValue, defaultFirstValue, defaultSecondValue,cryptoList]);
 
   async function fetchData() {
     const response = await fetch(apiUrl);
